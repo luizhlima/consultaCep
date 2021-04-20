@@ -1,9 +1,11 @@
 var getZipCode = document.querySelector("#inp-zip")
 var button = document.querySelector('#btn')
+var buttonClear = document.querySelector('#btn-clear')
 var main = document.querySelector('#app main')
 var p = document.createElement('p')
 
 button.addEventListener('click', consultZipCode)
+button.addEventListener('click', buttonClear)
 
 function consultZipCode (event) {
     event.preventDefault()
@@ -15,7 +17,7 @@ function consultZipCode (event) {
 
     if (zipCode === '' || zipCode.length < 8 || zipCode.length > 8) {
         message('Campo CEP vazio ou formato inválido!')
-        clearCep()
+        clearZip()
     }
     else{
         axios
@@ -23,7 +25,7 @@ function consultZipCode (event) {
         .then(function (response) {
             if (response.data.erro) {
                 message('Cep não existe!')
-                clearCep()
+                clearZip()
             }
 
             else {
@@ -34,7 +36,7 @@ function consultZipCode (event) {
         .catch(function (error) {
             console.log(error)
             message()
-            clearCep()
+            clearZip()
         })
     }
 }
@@ -43,8 +45,12 @@ function message(text) {
     main.appendChild(p).innerHTML = text
 }
 
-function clearCep(){
+function clearZip(){
     setTimeout(() => {
         main.appendChild(p).innerHTML = ''
     },3000)
+}
+
+function buttonClear () {
+    main.appendChild(p).innerHTML = ''
 }
